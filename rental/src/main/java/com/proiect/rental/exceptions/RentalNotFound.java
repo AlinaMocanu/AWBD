@@ -1,4 +1,4 @@
-package com.proiect.realEstate.exceptions;
+package com.proiect.rental.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

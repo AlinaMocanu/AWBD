@@ -1,7 +1,7 @@
-package com.proiect.realEstate.controller;
+package com.proiect.rental.controller;
 
-import com.proiect.realEstate.model.Rental;
-import com.proiect.realEstate.service.RentalService;
+import com.proiect.rental.model.Rental;
+import com.proiect.rental.service.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

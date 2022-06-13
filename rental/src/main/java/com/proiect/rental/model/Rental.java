@@ -1,4 +1,4 @@
-package com.proiect.realEstate.model;
+package com.proiect.rental.model;
 
 import lombok.Getter;
 import lombok.Setter;

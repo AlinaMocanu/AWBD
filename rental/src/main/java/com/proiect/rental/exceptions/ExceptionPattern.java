@@ -1,4 +1,4 @@
-package com.proiect.realEstate.exceptions;
+package com.proiect.rental.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

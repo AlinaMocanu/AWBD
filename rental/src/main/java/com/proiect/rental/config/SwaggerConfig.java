@@ -1,4 +1,4 @@
-package com.proiect.realEstate.config;
+package com.proiect.rental.config;
 
 
 import io.swagger.v3.oas.models.OpenAPI;
