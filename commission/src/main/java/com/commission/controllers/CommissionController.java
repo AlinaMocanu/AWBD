@@ -24,9 +24,9 @@ public class CommissionController {
                             schema = @Schema(implementation = Commission.class))}),
             @ApiResponse(responseCode = "404", description = "Commissions not found",
                     content = @Content)})
-    @GetMapping("/commission")
+    @GetMapping(value = "/commission", produces = {"application/hal+json"})
     public Commission getCommission() {
-        Commission commission = new Commission(configuration.getStandardPercent(), configuration.getBonus());
+        Commission commission = new Commission(configuration.getVersion(), configuration.getStandardPercent(), configuration.getBonus());
         //List<Commission> commissionList = asList(commission);
         //Link link = linkTo(methodOn(CommissionController.class).getCommissionWithParking()).withRel("getCommissionWithParking");
         //CollectionModel<Commission> result = CollectionModel.of(commissionList, link);

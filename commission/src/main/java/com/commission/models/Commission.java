@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Getter
 @AllArgsConstructor
 public class Commission extends RepresentationModel<Commission> {
+    private String versionId;
     private int standardPercent;
     private int bonus;
 }
