@@ -1,7 +1,9 @@
 package com.proiect.rental.controller;
 
-import com.proiect.rental.model.Rental;
+import com.proiect.rental.model.*;
+import com.proiect.rental.service.CommissionServiceProxy;
 import com.proiect.rental.service.RentalService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,6 +28,9 @@ public class RentalController {
     @Autowired
     RentalService rentalService;
 
+    @Autowired
+    CommissionServiceProxy commissionServiceProxy;
+
     @GetMapping(value = "/rental/list", produces = {"application/hal+json"})
     public CollectionModel<Rental> findAll() {
         List<Rental> rentals = rentalService.findAll();
@@ -40,13 +45,13 @@ public class RentalController {
         return result;
     }
 
-    @GetMapping("/rental/noOfRooms/{noOfRooms}")
+   /* @GetMapping("/rental/noOfRooms/{noOfRooms}")
     Rental findByNoOfRooms(@PathVariable int noOfRooms) {
         Rental rental = rentalService.findByNoOfRooms(noOfRooms);
         Link selfLink = linkTo(methodOn(RentalController.class).getRental(rental.getId())).withSelfRel();
         rental.add(selfLink);
         return rental;
-    }
+    }*/
 
 
     @PostMapping("/rental")
@@ -80,6 +85,25 @@ public class RentalController {
     @GetMapping("/rental/{rentalId}")
     public Rental getRental(@PathVariable Long rentalId) {
         Rental rental = rentalService.findById(rentalId);
+        return rental;
+    }
+
+    @GetMapping("/rental/noOfRooms/{noOfRooms}")
+    @CircuitBreaker(name="rentalByNoOfRooms", fallbackMethod = "getRentalFallback")
+    Rental findByNoOfRooms(@PathVariable int noOfRooms){
+        Rental rental = rentalService.findByNoOfRooms(noOfRooms);
+        Commission commission = commissionServiceProxy.findCommission();
+        if (rental.getParking()) {
+            rental.setPrice((commission.getBonus() + commission.getStandardPercent())/100.0 * rental.getPrice() + rental.getPrice());
+        } else {
+            rental.setPrice(commission.getStandardPercent()/100 * rental.getPrice() + rental.getPrice());
+        }
+
+        return rental;
+    }
+
+    private Rental getRentalFallback(int noOfRooms, Throwable throwable) {
+        Rental rental = rentalService.findByNoOfRooms(noOfRooms);
         return rental;
     }
 }

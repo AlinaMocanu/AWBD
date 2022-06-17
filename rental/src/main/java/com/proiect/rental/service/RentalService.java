@@ -1,8 +1,8 @@
 package com.proiect.rental.service;
 
-import com.proiect.rental.exceptions.RentalNotFound;
-import com.proiect.rental.model.Rental;
-import com.proiect.rental.repository.RentalRepository;
+import com.proiect.rental.exceptions.*;
+import com.proiect.rental.model.*;
+import com.proiect.rental.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

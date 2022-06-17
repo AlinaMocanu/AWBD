@@ -1,6 +1,6 @@
 package com.proiect.rental.repository;
 
-import com.proiect.rental.model.Rental;
+import com.proiect.rental.model.*;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
